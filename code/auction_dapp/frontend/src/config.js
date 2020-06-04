@@ -2,13 +2,13 @@ var DeedRepository = require('./contracts/DeedRepository')
 var AuctionRepository = require('./contracts/AuctionRepository')
 
 module.exports = {
-    JSONRPC_ENDPOINT: 'http://52.59.238.144:8545',
-    JSONRPC_WS_ENDPOINT: 'ws://52.59.238.144:8546', //'ws://52.59.238.144:8546',
-    BZZ_ENDPOINT: 'http://52.59.238.144:8500',
-    SHH_ENDPOINT: 'ws://52.59.238.144:8546',
+    JSONRPC_ENDPOINT: 'http://localhost:8545',
+    JSONRPC_WS_ENDPOINT: 'ws://localhost:8546', //'ws://52.59.238.144:8546',
+    BZZ_ENDPOINT: 'http://localhost:8500',
+    SHH_ENDPOINT: 'ws://localhost:8546',
 
-    DEEDREPOSITORY_ADDRESS: '0xfc35c45cd57661197d0bb19399c9d3ede1c50dcc',
-    AUCTIONREPOSITORY_ADDRESS: '0xefbebbf64a570f7b94f168430f45ecbb87546f06',
+    DEEDREPOSITORY_ADDRESS: '0xcACCA950285f01076e22CA69fDE9a33452F2d113',
+    AUCTIONREPOSITORY_ADDRESS: '0x08233Ab20B5BA521290250B9fF2cC2fAe79271f2',
 
     DEEDREPOSITORY_ABI: DeedRepository.abi,
     AUCTIONREPOSITORY_ABI: AuctionRepository.abi,
