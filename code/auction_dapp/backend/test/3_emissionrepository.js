@@ -1,33 +1,45 @@
-var DeedRepository = artifacts.require("./DeedRepository.sol");
+var EmissionRepository = artifacts.require("./EmissionRepository.sol");
 const fs = require("fs");
+const truffleAssert = require('truffle-assertions');
 
-contract("DeedRepository", async (accounts) => {
+contract("EmissionRepository", async (accounts) => {
   let instance;
   let auctionContractAddress = "";
-  let deed_id = 123456789;
-  let deed_url = "123456789";
+  let emission_id = 123456789;
+  let emission_type = "Carbondioxid";
 
   beforeEach("setup contract for each test", async function () {
-    instance = await DeedRepository.deployed();
+    instance = await EmissionRepository.deployed();
     auctionContractAddress = fs
       .readFileSync("./test/output.address")
       .toString();
   });
 
-  it("It should create an deed repository with UANFT as symbol", async () => {
+  it("It should create an Emission repository with Carbondioxid as symbol", async () => {
     let symbol = await instance.symbol();
     assert.equal(
       symbol.valueOf(),
-      "UANFT",
-      `Deedrepository symbol should be UANFT`
+      "Carbondioxid",
+      `Deedrepository symbol should be Carbondioxid`
     );
   });
 
   it("It should register a deed with id: 123456789", async () => {
-    await instance.registerDeed(deed_id, deed_url);
-    let tokenuri = await instance.tokenURI(deed_id);
-    assert.equal(tokenuri.valueOf(), deed_url, `Result should be true`);
+    await instance.registerEmission(emission_id, emission_type, { from: accounts[0]});
+
+    let tokenuri = await instance.tokenURI(emission_id);
+    assert.equal(tokenuri.valueOf(), emission_type, `Result should be true`);
   });
+
+/*
+  it("It should not register a deed with id: 123456789: lack of permissions", async () => {
+    await instance.registerEmission(emission_id, emission_type);
+    await truffleAssert.reverts(
+        instance.registerEmission(emission_id, emission_type, { from: accounts[1]}),
+        "Only the owner of the repository is allowed to add emissions"
+    );
+  });
+
 
   it(`It should check owner of 123456789 who is ${accounts[0]}`, async () => {
     let ownerOfDeed = await instance.ownerOf(deed_id);
@@ -60,6 +72,7 @@ contract("DeedRepository", async (accounts) => {
 
   it("It should transfer ownership of deed 123456789 to this contract", async () => {
     let oldOwnerAddress = await instance.ownerOf(deed_id);
+    let approvedAddress = await instance.getApproved(deed_id);
 
     await instance.transferFrom(
       oldOwnerAddress,
@@ -74,4 +87,5 @@ contract("DeedRepository", async (accounts) => {
       `${newOwnerAddress} should be ${auctionContractAddress}`
     );
   });
+  */
 });

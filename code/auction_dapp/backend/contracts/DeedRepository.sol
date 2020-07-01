@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.18;
 import "./ERC721/ERC721Token.sol";
 
 /**
@@ -9,13 +9,12 @@ import "./ERC721/ERC721Token.sol";
  */
 contract DeedRepository is ERC721Token {
 
-
     /**
     * @dev Created a DeedRepository with a name and symbol
     * @param _name string represents the name of the repository
     * @param _symbol string represents the symbol of the repository
     */
-    function DeedRepository(string _name, string _symbol) 
+    constructor(string _name, string _symbol) 
         public ERC721Token(_name, _symbol) {}
     
     /**
@@ -27,7 +26,7 @@ contract DeedRepository is ERC721Token {
     function registerDeed(uint256 _tokenId, string _uri) public {
         _mint(msg.sender, _tokenId);
         addDeedMetadata(_tokenId, _uri);
-        emit DeedRegistered(msg.sender, _tokenId);
+        emit DeedRegistered(msg.sender, _tokenId, _uri);
     }
 
     /**
@@ -46,5 +45,5 @@ contract DeedRepository is ERC721Token {
     * @param _by address of the registrar
     * @param _tokenId uint256 represents a specific deed
     */
-    event DeedRegistered(address _by, uint256 _tokenId);
+    event DeedRegistered(address _by, uint256 _tokenId, string _uri);
 }
